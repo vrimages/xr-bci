@@ -1,36 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class energyBallActivate : MonoBehaviour
 {
     [SerializeField] GameObject energyBall;
-    [Range(1.0f, 2.0f)] public float size = 1f;
+    public Vector3 minEnergySize;
+    public Vector3 maxEnergySize;
+    [SerializeField]
+    [Range(0f, 1f)] 
+    float sizeToFocusPercent = 0f;
 
-    public float scale(float focusMin, float focusMax, float energyMin, float energyMax, float focusValue)
-    {
-        float focusRange = (focusMax - focusMin);
-        float energyRange = (energyMax - energyMin);
-        float NewValue = (((focusValue - focusMin) * energyRange) / focusRange) + energyMin;
-
-        return (NewValue);
-    }
+    public float focusValue;
 
     // Start is called before the first frame update
     void Start()
     {
-        Mathf.Lerp
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 bellyPos = breathHand.transform.position;
-        Debug.Log(bellyPos.ToString("f5"));
-
-        float scaled = scale(exhalePos, inhalePos, 1F, 2F, orbScale);
-
-        energyBall.transform.localScale = new Vector3(scaled, scaled, scaled);
-        print(scaled);
+        energyBall.transform.localScale = Vector3.Lerp(minEnergySize, maxEnergySize, sizeToFocusPercent);
     }
 }
